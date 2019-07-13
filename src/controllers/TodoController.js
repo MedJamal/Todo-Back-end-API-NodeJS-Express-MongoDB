@@ -41,11 +41,10 @@ todoController.getOne = async  (request, response, next) => {
 todoController.create = async (request, response, next) => {
     console.log('Create Todo');
 
-    const { title, createdAt } = request.body;
+    const { title } = request.body;
     
     const newTodo = new Todo({
-        title: title,
-        createdAt: createdAt
+        title: title
     });
 
     try {
@@ -62,7 +61,7 @@ todoController.create = async (request, response, next) => {
 
 todoController.update = async (request, response, next) => {
     const id = request.params.id;
-    const { title } = request.body;
+    const { title, completed } = request.body;
 
     // Check if Todo does not exist in the db and retuen false with message ..
 
@@ -74,7 +73,7 @@ todoController.update = async (request, response, next) => {
     try {
         const todo = await Todo.updateOne(
             { _id: id },
-            { title: title }
+            { title: title, completed: completed }
         );
 
         if(todo.n === 0) {

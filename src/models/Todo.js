@@ -7,9 +7,13 @@ const TodoSchema = Schema({
         type: String,
         required: true
     },
+    completed: {
+        type: Boolean,
+        default: false
+    },
     createdAt: {
         type: Date,
-        required: true
+        default: new Date()
     }
 });
 
