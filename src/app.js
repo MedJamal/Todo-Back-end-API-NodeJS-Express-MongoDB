@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 const routes = require('./routes/Routes');
 
@@ -28,6 +29,10 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
+
 /**
  * Routes
  */
@@ -39,17 +44,17 @@ app.use('/api', routes);
  */
 
 //404 Not Found
-app.use((req, res, next) => {
-    const err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+app.use((request, response, next) => {
+    const error = new Error('Not Found');
+    error.status = 404;
+    next(error);
 });
 
-app.use((err, req, res, next) => {
+app.use((err, request, response, next) => {
     const status = err.status || 500;
     const error = err.message || 'Error processing your request';
 
-    res.status(status).send({
+    response.status(status).send({
         error
     })
 });
