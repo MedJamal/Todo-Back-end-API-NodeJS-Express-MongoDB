@@ -4,6 +4,7 @@ const passport = require('passport');
 
 const todoController = require('../controllers/TodoController');
 const authController = require('../controllers/AuthController');
+const userController = require('../controllers/UserController');
 
 
 router.post('/register', authController.register);
@@ -22,6 +23,8 @@ router.all('*', (req, res, next) => {
         return next();
     })(req, res, next);
 });
+
+router.get('/get-auth-user', userController.getAuthenticatedUser);
 
 router.get('/todos', todoController.get);
 router.get('/todo/:id', todoController.getOne);

@@ -10,11 +10,11 @@ todoController.get = async (request, response, next) => {
     };
 
     try {
-        const todo = await Todo.find(query).sort({ createdAt: 'desc' });
+        const todos = await Todo.find(query).sort({ createdAt: 'desc' });
 
         return response.status(200).send({
             success: true,
-            todo: todo
+            todos: todos
         });
     } catch (error) {
         next(error);

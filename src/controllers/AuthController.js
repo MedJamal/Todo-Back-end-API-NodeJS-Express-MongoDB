@@ -12,7 +12,7 @@ AuthController.register = async (request, response, next) => {
 
     try {
         const user = await newUser.save();
-        return response.status(201).send({ user });
+        return response.status(201).send({ success: true, user });
     } catch (error) {
         if(error.code === 11000) {
             const error = new Error(`Email address ${newUser.email} is alredy exist in database`);
