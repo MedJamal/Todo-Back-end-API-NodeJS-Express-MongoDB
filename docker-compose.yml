@@ -1,0 +1,20 @@
+version: "3"
+services:
+    mongo:
+        container_name: mongo
+        restart: always
+        #environment:
+            #MONGO_INITDB_ROOT_USERNAME: root
+            #MONGO_INITDB_ROOT_PASSWORD: myMongoPassword
+        image: mongo
+        ports:
+            - '27017:27017'
+    app:
+        container_name: express-js
+        restart: always
+        build: .
+        ports:
+            - '80:5000'
+        links:
+            - mongo
+
